@@ -92,8 +92,8 @@ export default class Sidebar extends React.Component {
         });
 
         teamMembers.forEach((member) => {
-            msgs += member.msg_count;
-            mentions += member.mention_count;
+            msgs += member.msg_count || 0;
+            mentions += member.mention_count || 0;
         });
 
         return {msgs, mentions};
@@ -143,7 +143,6 @@ export default class Sidebar extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        this.updateTitle();
         this.updateUnreadIndicators();
         if (!Utils.isMobile()) {
             $('.sidebar--left .nav-pills__container').perfectScrollbar();
@@ -175,6 +174,7 @@ export default class Sidebar extends React.Component {
 
     onChange() {
         this.setState(this.getStateFromStores());
+        this.updateTitle();
     }
 
     updateTitle() {
